@@ -5,3 +5,8 @@ test/compiled_tests
 public
 docs/LICENSE.md
 
+marked.min.js
+lib/marked.js
+lib/marked.esm.js
+package.json
+package-lock.json
