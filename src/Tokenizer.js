@@ -419,6 +419,27 @@ module.exports = class Tokenizer {
       };
     }
   }
+  /**
+   * 
+   * Extension expr, icon, cond
+   */
+
+  /**
+   * 
+   *  expr, une expression à évaluer avant de l'afficher 
+   */
+
+  expr(src) {
+    const cap = this.rules.block.expr.exec(src);
+    if (cap){
+      return{
+        type: 'expr',
+        raw: cap[0],
+        text: cap[1],
+        length: cap[0].length + cap[1].length + 4
+      }
+    }
+  }
 
   text(src) {
     const cap = this.rules.block.text.exec(src);

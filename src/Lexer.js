@@ -110,8 +110,9 @@ module.exports = class Lexer {
       .replace(/\t/g, '    ');
 
     this.blockTokens(src, this.tokens, true);
-
     this.inline(this.tokens);
+    
+    console.log("after lex", this.tokens);
 
     return this.tokens;
   }
@@ -121,7 +122,7 @@ module.exports = class Lexer {
    */
   blockTokens(src, tokens = [], top = true) {
     if (this.options.pedantic) {
-      src = src.replace(/^ +$/gm, '');
+      src = src.replace(/^ +$/gm, '');// remplace de slignes vides avec que des espaces par ''
     }
     let token, i, l, lastToken;
 
@@ -236,6 +237,14 @@ module.exports = class Lexer {
         continue;
       }
 
+      /**
+       * Block extention expr, cond, icon?
+       */
+      if (token = this.tokenizer.expr(src)){
+        src = src.substring(token.length);
+        tokens.push(token);
+        continue;
+      }
       // text
       if (token = this.tokenizer.text(src)) {
         src = src.substring(token.raw.length);
@@ -259,7 +268,6 @@ module.exports = class Lexer {
         }
       }
     }
-
     return tokens;
   }
 
@@ -324,7 +332,6 @@ module.exports = class Lexer {
         }
       }
     }
-
     return tokens;
   }
 

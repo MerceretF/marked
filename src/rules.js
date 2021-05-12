@@ -82,6 +82,12 @@ block.paragraph = edit(block._paragraph)
   .replace('tag', block._tag) // pars can be interrupted by type (6) html blocks
   .getRegex();
 
+/**
+ * Extended BLock grammar
+ */
+block.expr = /^(<expr)+ ([^\n]+?) \/>+/;
+
+
 block.blockquote = edit(block.blockquote)
   .replace('paragraph', block.paragraph)
   .getRegex();
@@ -244,6 +250,12 @@ inline.reflinkSearch = edit(inline.reflinkSearch, 'g')
   .replace('reflink', inline.reflink)
   .replace('nolink', inline.nolink)
   .getRegex();
+
+
+/**
+ * Extended inline Grammar
+ */
+inline.expr = /^(<expr)+ ([^\n]+?) \/>+/;
 
 /**
  * Normal Inline Grammar
