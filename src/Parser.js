@@ -248,6 +248,7 @@ module.exports = class Parser {
           out += renderer.del(this.parseInline(token.tokens, renderer));
           break;
         }
+        //EXTENDED PARSER EXPR COND ICON,
         case 'expr' :{
           console.log('inline expr existe');
           break;
