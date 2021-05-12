@@ -170,6 +170,11 @@ module.exports = class Parser {
           out += this.renderer.paragraph(this.parseInline(token.tokens));
           continue;
         }
+        // EXTENDED PARSING EXPR COND ICON
+        case 'expr' : {
+          console.log("expr existe");
+          continue;
+        }
         case 'text': {
           body = token.tokens ? this.parseInline(token.tokens) : token.text;
           while (i + 1 < l && tokens[i + 1].type === 'text') {
@@ -241,6 +246,10 @@ module.exports = class Parser {
         }
         case 'del': {
           out += renderer.del(this.parseInline(token.tokens, renderer));
+          break;
+        }
+        case 'expr' :{
+          console.log('inline expr existe');
           break;
         }
         case 'text': {
