@@ -241,10 +241,13 @@ module.exports = class Lexer {
        * Block extention expr, cond, icon?
        */
       if (token = this.tokenizer.expr(src)){
-        src = src.substring(token.length);
+        src = src.substring(token.raw.length);
         tokens.push(token);
         continue;
       }
+
+      // END OF EXTENDED BLOCK
+
       // text
       if (token = this.tokenizer.text(src)) {
         src = src.substring(token.raw.length);
@@ -468,10 +471,19 @@ module.exports = class Lexer {
        * Extended inlineTokens expr icon, cond?
        */
       if (token = this.tokenizer.expr(src)){
-        src = src.substring(token.length);
+        src = src.substring(token.raw.length);
         tokens.push(token);
         continue;
       }
+
+      if (token = this.tokenizer.icon(src)){
+        src = src.substring(token.raw.length);
+        console.log('icon src', src);
+        tokens.push(token);
+        continue;
+      }
+      // END OF EXTENDED BLOCK
+
       // text
       if (token = this.tokenizer.inlineText(src, inRawBlock, smartypants)) {
         src = src.substring(token.raw.length);

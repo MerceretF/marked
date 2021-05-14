@@ -435,12 +435,28 @@ module.exports = class Tokenizer {
       return{
         type: 'expr',
         raw: cap[0],
-        text: cap[1],
-        length: cap[0].length + cap[1].length + 4
+        text: cap[2]
+      }
+    }
+  }
+  /**
+   * 
+   * icon, une référence à une icone material 
+   */
+  icon(src) {
+    const cap = this.rules.block.icon.exec(src);
+    if (cap){
+      console.log(cap);
+      return{
+        type: 'icon',
+        raw: cap[0],
+        text: cap[1]
       }
     }
   }
 
+  // END OF EXTENDED BLOCK
+  
   text(src) {
     const cap = this.rules.block.text.exec(src);
     if (cap) {

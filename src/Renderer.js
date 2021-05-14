@@ -160,6 +160,20 @@ module.exports = class Renderer {
     return out;
   }
 
+  /**
+   *  
+   * EXTENDED RENDERER EXPR ICON COND 
+   */
+
+  expr(expr){
+    return eval(expr);
+  }
+
+  icon(text){
+    return '<span class="material-icons-outlined">'+ text +'</span>';
+  }
+
+  // END OF EXTENDED BLOCK
   text(text) {
     return text;
   }

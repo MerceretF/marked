@@ -86,7 +86,8 @@ block.paragraph = edit(block._paragraph)
  * Extended BLock grammar
  */
 block.expr = /^(<expr)+ ([^\n]+?) \/>+/;
-
+block.icon = /^:([^:\n]+):/;
+// END OF EXTENDED BLOCK
 
 block.blockquote = edit(block.blockquote)
   .replace('paragraph', block.paragraph)
@@ -256,7 +257,28 @@ inline.reflinkSearch = edit(inline.reflinkSearch, 'g')
  * Extended inline Grammar
  */
 inline.expr = /^(<expr)+ ([^\n]+?) \/>+/;
+inline.icon = /^<:([^:\n]+):>/;
+//trying emstrong-like icon regex
+/*inline.icon = {
+  lDelim: /^(?:\:+(?:([punct_])|[^\s:]))/,
+  //        (1) and (2) can only be a Right Delimiter. (3) and (4) can only be Left.  (5) and (6) can be either Left or Right.
+  //        () Skip other delimiter (1) #***                (2) a***#, a***                   (3) #***a, ***a                 (4) ***#              (5) #***#                 (6) a***a
+  rDelimAst: /\_\_[^_]:?\:[^_]:?\_\_|[punct_](\:+)(?=[\s]|$)|[^punct:*_\s](\:+)(?=[punct_\s]|$)|[punct_\s](\:+)(?=[^punct:*_\s])|[\s](\:+)(?=[punct_])|[punct_](\:+)(?=[punct_])|[^punct:*_\s](\:+)(?=[^punct:*_\s])/,
+  rDelimUnd: /\*\*[^*]:?\:[^*]:?\*\*|[punct*](\:+)(?=[\s]|$)|[^punct:*_\s](\:+)(?=[punct*\s]|$)|[punct*\s](\:+)(?=[^punct:*_\s])|[\s](\:+)(?=[punct*])|[punct*](\:+)(?=[punct*])/  // ^- Not allowed for _
+}
+inline.icon.lDelim = edit(inline.emStrong.lDelim)
+  .replace(/punct/g, inline._punctuation)
+  .getRegex();
 
+inline.icon.rDelimAst = edit(inline.emStrong.rDelimAst, 'g')
+  .replace(/punct/g, inline._punctuation)
+  .getRegex();
+
+inline.icon.rDelimUnd = edit(inline.emStrong.rDelimUnd, 'g')
+  .replace(/punct/g, inline._punctuation)
+  .getRegex();
+*/
+// END OF EXTENDED BLOCK
 /**
  * Normal Inline Grammar
  */
