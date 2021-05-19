@@ -112,7 +112,7 @@ module.exports = class Lexer {
     this.blockTokens(src, this.tokens, true);
     this.inline(this.tokens);
     
-    console.log("after lex", this.tokens);
+    console.log(JSON.stringify(this.tokens, null, 2));
 
     return this.tokens;
   }
@@ -478,7 +478,6 @@ module.exports = class Lexer {
 
       if (token = this.tokenizer.icon(src)){
         src = src.substring(token.raw.length);
-        console.log('icon src', src);
         tokens.push(token);
         continue;
       }

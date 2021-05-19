@@ -430,7 +430,7 @@ module.exports = class Tokenizer {
    */
 
   expr(src) {
-    const cap = this.rules.block.expr.exec(src);
+    const cap = this.rules.inline.expr.exec(src);
     if (cap){
       return{
         type: 'expr',
@@ -444,18 +444,18 @@ module.exports = class Tokenizer {
    * icon, une référence à une icone material 
    */
   icon(src) {
-    const cap = this.rules.block.icon.exec(src);
+    const cap = this.rules.inline.icon.exec(src);
     if (cap){
       console.log(cap);
       return{
         type: 'icon',
         raw: cap[0],
-        text: cap[1]
+        text: cap[2]
       }
     }
   }
 
-  // END OF EXTENDED BLOCK
+  // END OF EXTENDED
   
   text(src) {
     const cap = this.rules.block.text.exec(src);

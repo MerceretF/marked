@@ -86,7 +86,7 @@ block.paragraph = edit(block._paragraph)
  * Extended BLock grammar
  */
 block.expr = /^(<expr)+ ([^\n]+?) \/>+/;
-block.icon = /^:([^:\n]+):/;
+block.icon = /^(:)+([^:\n]+?)(:)/;
 // END OF EXTENDED BLOCK
 
 block.blockquote = edit(block.blockquote)
@@ -257,7 +257,7 @@ inline.reflinkSearch = edit(inline.reflinkSearch, 'g')
  * Extended inline Grammar
  */
 inline.expr = /^(<expr)+ ([^\n]+?) \/>+/;
-inline.icon = /^<:([^:\n]+):>/;
+inline.icon = /^(:)+([^:\n]+?)(:)/;
 //trying emstrong-like icon regex
 /*inline.icon = {
   lDelim: /^(?:\:+(?:([punct_])|[^\s:]))/,

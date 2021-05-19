@@ -262,6 +262,7 @@ module.exports = class Parser {
         case 'icon' :{
           console.log('inline icon exists', token);
           out += renderer.icon(token.text);
+          break;
         }
         // END OF EXTENSION BLOCK
         case 'text': {
