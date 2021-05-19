@@ -240,6 +240,12 @@ module.exports = class Lexer {
       /**
        * Block extention expr, cond, icon?
        */
+      if (token = this.tokenizer.cond(src)){
+        src = src.substring(token.raw.length);
+        tokens.push(token);
+        continue;
+      }
+
       if (token = this.tokenizer.expr(src)){
         src = src.substring(token.raw.length);
         tokens.push(token);
@@ -288,7 +294,10 @@ module.exports = class Lexer {
       switch (token.type) {
         case 'paragraph':
         case 'text':
-        case 'heading': {
+        case 'heading':
+        //Extended cond block
+        case 'cond' :
+         {
           token.tokens = [];
           this.inlineTokens(token.text, token.tokens);
           break;
@@ -470,6 +479,12 @@ module.exports = class Lexer {
       /**
        * Extended inlineTokens expr icon, cond?
        */
+      if (token = this.tokenizer.cond(src)){
+      src = src.substring(token.raw.length);
+      tokens.push(token);
+      continue;
+      }
+
       if (token = this.tokenizer.expr(src)){
         src = src.substring(token.raw.length);
         tokens.push(token);

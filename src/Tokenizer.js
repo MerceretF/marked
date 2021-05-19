@@ -414,8 +414,8 @@ module.exports = class Tokenizer {
         type: 'paragraph',
         raw: cap[0],
         text: cap[1].charAt(cap[1].length - 1) === '\n'
-          ? cap[1].slice(0, -1)
-          : cap[1]
+        ? cap[1].slice(0, -1)
+        : cap[1]
       };
     }
   }
@@ -423,7 +423,23 @@ module.exports = class Tokenizer {
    * 
    * Extension expr, icon, cond
    */
-
+  
+  /**
+   * 
+   * cond, a block of text that will be rendered only if the given condition is met 
+   */
+  cond(src) {
+    const cap = this.rules.block.cond.exec(src);
+    if (cap) {
+      console.log("AAAAAAAAAAAAA", cap);
+      return {
+        type: 'cond',
+        raw: cap[0],
+        condition: cap[1],
+        text: cap[2]
+      }
+    }
+  }
   /**
    * 
    *  expr, une expression à évaluer avant de l'afficher 
@@ -446,7 +462,7 @@ module.exports = class Tokenizer {
   icon(src) {
     const cap = this.rules.inline.icon.exec(src);
     if (cap){
-      console.log(cap);
+      //console.log(cap);
       return{
         type: 'icon',
         raw: cap[0],

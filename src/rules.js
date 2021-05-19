@@ -31,7 +31,10 @@ const block = {
   lheading: /^([^\n]+)\n {0,3}(=+|-+) *(?:\n+|$)/,
   // regex template, placeholders will be replaced according to different paragraph
   // interruption rules of commonmark and the original markdown spec:
-  _paragraph: /^([^\n]+(?:\n(?!hr|heading|lheading|blockquote|fences|list|html| +\n)[^\n]+)*)/,
+  _paragraph: /^([^\n]+(?:\n(?!hr|heading|lheading|blockquote|fences|list|html|cond| +\n)[^\n]+)*)/,
+  //EXTENDED COND RULE
+  //cond: /^<cond {0,3}([^\n]+) {0,3}>([^\n]+(?:\n(?!hr|heading|lheading|blockquote|fences|list|html| +\n)[^\n]+)*)<\/cond {0,3}>/,
+
   text: /^[^\n]+/
 };
 
@@ -70,6 +73,25 @@ block.html = edit(block.html, 'i')
   .replace('tag', block._tag)
   .replace('attribute', / +[a-zA-Z:_][\w.:-]*(?: *= *"[^"\n]*"| *= *'[^'\n]*'| *= *[^\s"'=<>`]+)?/)
   .getRegex();
+  
+/**
+ * Extended BLock grammar
+ */
+/*block.cond = edit(block._cond)
+ .replace('hr', block.hr)
+ .replace('heading', ' {0,3}#{1,6} ')
+ .replace('|lheading', '') // setex headings don't interrupt commonmark paragraphs
+ .replace('blockquote', ' {0,3}>')
+ .replace('fences', ' {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n')
+ .replace('list', ' {0,3}(?:[*+-]|1[.)]) ') // only lists starting from 1 can interrupt
+ //.replace('html', '</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|!--)')
+ .replace('tag', block._tag) // pars can be interrupted by type (6) html blocks
+ .getRegex();*/
+
+block.cond = /^ {0,3}<cond +([^.*(</)]+) > {0,3}((?:(?: *| *)[^]+?)[^\n]+) \n{0,2}<\/cond>/;
+block.expr = /^(<expr)+ ([^\n]+?) \/>+/;
+block.icon = /^(:)+([^:\n]+?)(:)/;
+// END OF EXTENDED BLOCK
 
 block.paragraph = edit(block._paragraph)
   .replace('hr', block.hr)
@@ -80,14 +102,9 @@ block.paragraph = edit(block._paragraph)
   .replace('list', ' {0,3}(?:[*+-]|1[.)]) ') // only lists starting from 1 can interrupt
   .replace('html', '</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|!--)')
   .replace('tag', block._tag) // pars can be interrupted by type (6) html blocks
+  .replace('cond', block.cond)
   .getRegex();
 
-/**
- * Extended BLock grammar
- */
-block.expr = /^(<expr)+ ([^\n]+?) \/>+/;
-block.icon = /^(:)+([^:\n]+?)(:)/;
-// END OF EXTENDED BLOCK
 
 block.blockquote = edit(block.blockquote)
   .replace('paragraph', block.paragraph)
@@ -258,27 +275,9 @@ inline.reflinkSearch = edit(inline.reflinkSearch, 'g')
  */
 inline.expr = /^(<expr)+ ([^\n]+?) \/>+/;
 inline.icon = /^(:)+([^:\n]+?)(:)/;
-//trying emstrong-like icon regex
-/*inline.icon = {
-  lDelim: /^(?:\:+(?:([punct_])|[^\s:]))/,
-  //        (1) and (2) can only be a Right Delimiter. (3) and (4) can only be Left.  (5) and (6) can be either Left or Right.
-  //        () Skip other delimiter (1) #***                (2) a***#, a***                   (3) #***a, ***a                 (4) ***#              (5) #***#                 (6) a***a
-  rDelimAst: /\_\_[^_]:?\:[^_]:?\_\_|[punct_](\:+)(?=[\s]|$)|[^punct:*_\s](\:+)(?=[punct_\s]|$)|[punct_\s](\:+)(?=[^punct:*_\s])|[\s](\:+)(?=[punct_])|[punct_](\:+)(?=[punct_])|[^punct:*_\s](\:+)(?=[^punct:*_\s])/,
-  rDelimUnd: /\*\*[^*]:?\:[^*]:?\*\*|[punct*](\:+)(?=[\s]|$)|[^punct:*_\s](\:+)(?=[punct*\s]|$)|[punct*\s](\:+)(?=[^punct:*_\s])|[\s](\:+)(?=[punct*])|[punct*](\:+)(?=[punct*])/  // ^- Not allowed for _
-}
-inline.icon.lDelim = edit(inline.emStrong.lDelim)
-  .replace(/punct/g, inline._punctuation)
-  .getRegex();
 
-inline.icon.rDelimAst = edit(inline.emStrong.rDelimAst, 'g')
-  .replace(/punct/g, inline._punctuation)
-  .getRegex();
-
-inline.icon.rDelimUnd = edit(inline.emStrong.rDelimUnd, 'g')
-  .replace(/punct/g, inline._punctuation)
-  .getRegex();
-*/
 // END OF EXTENDED BLOCK
+
 /**
  * Normal Inline Grammar
  */

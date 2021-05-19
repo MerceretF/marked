@@ -89,6 +89,8 @@ module.exports = class Renderer {
     return '<p>' + text + '</p>\n';
   }
 
+  
+
   table(header, body) {
     if (body) body = '<tbody>' + body + '</tbody>';
 
@@ -164,6 +166,14 @@ module.exports = class Renderer {
    *  
    * EXTENDED RENDERER EXPR ICON COND 
    */
+
+  cond(condition, text) {
+    if (eval(condition)) {
+      return '<p>' + text + '</p>\n';
+    }else{
+      return '';
+    }
+  }
 
   expr(expr){
     return eval(expr);
