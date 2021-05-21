@@ -167,12 +167,8 @@ module.exports = class Renderer {
    * EXTENDED RENDERER EXPR ICON COND 
    */
 
-  cond(condition, text) {
-    if (eval(condition)) {
-      return '<p>' + text + '</p>\n';
-    }else{
+  cond(text) {
       return '';
-    }
   }
 
   expr(expr){

@@ -5,6 +5,7 @@ const {
   escape,
   findClosingBracket
 } = require('./helpers.js');
+const { lex } = require('./Lexer.js');
 
 function outputLink(cap, link, raw) {
   const href = link.href;
@@ -410,6 +411,7 @@ module.exports = class Tokenizer {
   paragraph(src) {
     const cap = this.rules.block.paragraph.exec(src);
     if (cap) {
+      console.log("PARAGRAPH", cap);
       return {
         type: 'paragraph',
         raw: cap[0],
@@ -428,15 +430,22 @@ module.exports = class Tokenizer {
    * 
    * cond, a block of text that will be rendered only if the given condition is met 
    */
-  cond(src) {
+  cond(src, lexer) {
     const cap = this.rules.block.cond.exec(src);
     if (cap) {
-      console.log("AAAAAAAAAAAAA", cap);
+      //console.log("AAAAAAAAAAAAA", cap);
+      
+      //Analyzing condition here is mandatory not to launch the lexing of the tokens inside
+      //cond if it evaluates to false.
+
+      //for now hanndling is as follows :
+      let condition = eval(cap[1]);
+
       return {
         type: 'cond',
         raw: cap[0],
-        condition: cap[1],
-        text: cap[2]
+        condition: condition, 
+        contents: cap[2]
       }
     }
   }

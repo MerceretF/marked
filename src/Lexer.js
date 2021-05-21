@@ -197,6 +197,8 @@ module.exports = class Lexer {
         continue;
       }
 
+      
+
       // html
       if (token = this.tokenizer.html(src)) {
         src = src.substring(token.raw.length);
@@ -229,6 +231,19 @@ module.exports = class Lexer {
         tokens.push(token);
         continue;
       }
+      
+      //EXTENDED COND 
+      //lexing cond before paragraph and html
+      if (token = this.tokenizer.cond(src, this)){
+        src = src.substring(token.raw.length);
+        tokens.push(token);
+        if (token.condition){
+          //(new lexer for eahc cond ? (no for now))
+          this.lex(token.contents); // lex contents if cond evaluates to true
+        }
+        continue;
+      }
+      //end of extended cond
 
       // top-level paragraph
       if (top && (token = this.tokenizer.paragraph(src))) {
@@ -240,11 +255,7 @@ module.exports = class Lexer {
       /**
        * Block extention expr, cond, icon?
        */
-      if (token = this.tokenizer.cond(src)){
-        src = src.substring(token.raw.length);
-        tokens.push(token);
-        continue;
-      }
+      
 
       if (token = this.tokenizer.expr(src)){
         src = src.substring(token.raw.length);

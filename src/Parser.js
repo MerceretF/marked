@@ -172,18 +172,7 @@ module.exports = class Parser {
         }
         // EXTENDED PARSING EXPR COND ICON
         case 'cond': {
-          console.log("parsing cond", token.condition, token.text);
-          out += this.renderer.cond(token.condition, this.parseInline(token.tokens));
-          continue;
-        }
-        
-        case 'expr' : {
-          console.log("block expr n'existe pas");
-          continue;
-        }
-
-        case 'icon' : {
-          console.log("block icon en fait");
+          out += this.renderer.cond(this.parseInline(token.tokens));
           continue;
         }
         // END OF EXTENDED BLOCK
@@ -261,10 +250,6 @@ module.exports = class Parser {
           break;
         }
         //EXTENDED INLINEPARSER EXPR ICON,
-        case 'cond' :{
-          console.log("actually cond is inline");
-          break;
-        }
         case 'expr' :{
           //console.log('inline expr existe', token);
           out += renderer.expr(token.text);

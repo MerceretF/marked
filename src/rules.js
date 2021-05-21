@@ -32,9 +32,6 @@ const block = {
   // regex template, placeholders will be replaced according to different paragraph
   // interruption rules of commonmark and the original markdown spec:
   _paragraph: /^([^\n]+(?:\n(?!hr|heading|lheading|blockquote|fences|list|html|cond| +\n)[^\n]+)*)/,
-  //EXTENDED COND RULE
-  //cond: /^<cond {0,3}([^\n]+) {0,3}>([^\n]+(?:\n(?!hr|heading|lheading|blockquote|fences|list|html| +\n)[^\n]+)*)<\/cond {0,3}>/,
-
   text: /^[^\n]+/
 };
 
@@ -88,7 +85,7 @@ block.html = edit(block.html, 'i')
  .replace('tag', block._tag) // pars can be interrupted by type (6) html blocks
  .getRegex();*/
 
-block.cond = /^ {0,3}<cond +([^.*(</)]+) > {0,3}((?:(?: *| *)[^]+?)[^\n]+) \n{0,2}<\/cond>/;
+block.cond = /^ {0,3}<cond +([^.*(</)]+) > {0,3}((?:(?: *)[^]+?)[^\n]+) ?\n{0,2}<\/cond>/;
 block.expr = /^(<expr)+ ([^\n]+?) \/>+/;
 block.icon = /^(:)+([^:\n]+?)(:)/;
 // END OF EXTENDED BLOCK
@@ -102,7 +99,7 @@ block.paragraph = edit(block._paragraph)
   .replace('list', ' {0,3}(?:[*+-]|1[.)]) ') // only lists starting from 1 can interrupt
   .replace('html', '</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|!--)')
   .replace('tag', block._tag) // pars can be interrupted by type (6) html blocks
-  .replace('cond', block.cond)
+  //.replace('cond', block.cond)
   .getRegex();
 
 
