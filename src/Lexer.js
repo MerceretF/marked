@@ -233,7 +233,7 @@ module.exports = class Lexer {
       }
       
       //EXTENDED COND 
-      //lexing cond before paragraph and html
+      //lexing cond before paragraph
       if (token = this.tokenizer.cond(src, this)){
         src = src.substring(token.raw.length);
         tokens.push(token);

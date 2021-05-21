@@ -74,16 +74,6 @@ block.html = edit(block.html, 'i')
 /**
  * Extended BLock grammar
  */
-/*block.cond = edit(block._cond)
- .replace('hr', block.hr)
- .replace('heading', ' {0,3}#{1,6} ')
- .replace('|lheading', '') // setex headings don't interrupt commonmark paragraphs
- .replace('blockquote', ' {0,3}>')
- .replace('fences', ' {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n')
- .replace('list', ' {0,3}(?:[*+-]|1[.)]) ') // only lists starting from 1 can interrupt
- //.replace('html', '</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|!--)')
- .replace('tag', block._tag) // pars can be interrupted by type (6) html blocks
- .getRegex();*/
 
 block.cond = /^ {0,3}<cond +([^.*(</)]+) > {0,3}((?:(?: *)[^]+?)[^\n]+) ?\n{0,2}<\/cond>/;
 block.expr = /^(<expr)+ ([^\n]+?) \/>+/;
