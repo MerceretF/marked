@@ -251,12 +251,10 @@ module.exports = class Parser {
         }
         //EXTENDED INLINEPARSER EXPR ICON,
         case 'expr' :{
-          //console.log('inline expr existe', token);
           out += renderer.expr(token.text);
           break;
         }
         case 'icon' :{
-          //console.log('inline icon exists', token);
           out += renderer.icon(token.text);
           break;
         }

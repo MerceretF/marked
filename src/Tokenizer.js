@@ -411,7 +411,6 @@ module.exports = class Tokenizer {
   paragraph(src) {
     const cap = this.rules.block.paragraph.exec(src);
     if (cap) {
-      console.log("PARAGRAPH", cap);
       return {
         type: 'paragraph',
         raw: cap[0],
@@ -433,7 +432,7 @@ module.exports = class Tokenizer {
   cond(src, lexer) {
     const cap = this.rules.block.cond.exec(src);
     if (cap) {
-      //console.log("AAAAAAAAAAAAA", cap);
+      //console.log("TOKENIZED COND", cap);
       
       //Analyzing condition here is mandatory not to launch the lexing of the tokens inside
       //cond if it evaluates to false.
@@ -471,7 +470,7 @@ module.exports = class Tokenizer {
   icon(src) {
     const cap = this.rules.inline.icon.exec(src);
     if (cap){
-      //console.log(cap);
+      //console.log("TOKENIZED ICON", cap);
       return{
         type: 'icon',
         raw: cap[0],

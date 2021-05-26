@@ -111,8 +111,8 @@ module.exports = class Lexer {
 
     this.blockTokens(src, this.tokens, true);
     this.inline(this.tokens);
-    
-    console.log(JSON.stringify(this.tokens, null, 2));
+    //loging the token list 
+    //console.log(JSON.stringify(this.tokens, null, 2));
 
     return this.tokens;
   }
